@@ -1,8 +1,10 @@
 #pragma once
+#include <glad/glad.h>
 #include <SDL3/SDL.h>
 #include <SDL3_ttf/SDL_ttf.h>
 #include <SDL3_image/SDL_image.h>
 #include <iostream>
+
 
 namespace neu {
 	/// <summary>
@@ -46,6 +48,10 @@ namespace neu {
 		/// Call this at the beginning of each frame before drawing.
 		/// </summary>
 		void Clear();
+
+
+
+		
 
 		/// <summary>
 		/// Presents the rendered frame to the screen.
