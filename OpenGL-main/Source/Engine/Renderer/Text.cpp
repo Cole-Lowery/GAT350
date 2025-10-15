@@ -29,7 +29,6 @@ namespace neu {
 		}
 
 		// create a texture from the surface, only textures can render to the renderer
-		m_texture = SDL_CreateTextureFromSurface(renderer.m_renderer, surface);
 		if (m_texture == nullptr) {
 			SDL_DestroySurface(surface);
 			LOG_ERROR("Could not create texture {}", SDL_GetError());
@@ -49,14 +48,5 @@ namespace neu {
 	/// <param name="x">The x-coordinate where the text will be drawn.</param>
 	/// <param name="y">The y-coordinate where the text will be drawn.</param>
 	void Text::Draw(Renderer& renderer, float x, float y) {
-		// get the texture width and height
-		float width, height;
-		bool success = SDL_GetTextureSize(m_texture, &width, &height);
-		assert(success);
-
-		// set the texture into the renderer at rect 
-		SDL_FRect rect{ x, y, width, height };
-		success = SDL_RenderTexture(renderer.m_renderer, m_texture, NULL, &rect);
-		assert(success);
 	}
 }
