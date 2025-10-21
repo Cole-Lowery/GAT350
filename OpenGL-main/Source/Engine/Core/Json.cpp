@@ -38,7 +38,8 @@ namespace neu::serial
         }
 
         // get the data
-        data = value[name.c_str()].GetInt();
+
+        data[i] = Array[i].GetInt();
 
         return true;
     }

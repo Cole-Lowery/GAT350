@@ -9,10 +9,10 @@
       <UniqueIdentifier>{7d2ce0eb-c054-4fe8-a9fe-1efa54b53c25}</UniqueIdentifier>
     </Filter>
     <Filter Include="Assets\Shaders">
-      <UniqueIdentifier>{d2c6a1b0-e618-4c7b-8c09-a32e22a1cd81}</UniqueIdentifier>
+      <UniqueIdentifier>{e9e153f9-f0da-4155-b644-af43510d76c6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Assets\Textures">
-      <UniqueIdentifier>{932ff7f5-7bae-4988-863a-655c688c99ba}</UniqueIdentifier>
+      <UniqueIdentifier>{54be3a0c-352c-466d-9818-e35993b8b627}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -27,13 +27,12 @@
     <ClInclude Include="ApplicationPCH.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Main.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Build\Assets\Shaders\basic.vert">
+    <None Include="..\..\Build\Assets\Shaders\basic.frag">
       <Filter>Assets\Shaders</Filter>
     </None>
-    <None Include="..\..\Build\Assets\Shaders\basic.frag">
+    <None Include="..\..\Build\Assets\Shaders\basic.vert">
       <Filter>Assets\Shaders</Filter>
     </None>
   </ItemGroup>

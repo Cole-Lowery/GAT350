@@ -36,6 +36,7 @@ namespace neu {
         SDL_DestroyWindow(m_window);        // Destroy the window
         SDL_Quit();                         // Shutdown SDL
     }
+
     /// <summary>
     /// Creates a window and associated renderer with the specified properties.
     /// Sets up VSync for smooth rendering and logical presentation for resolution-independent scaling.
@@ -83,17 +84,20 @@ namespace neu {
         return true;
     }
 
-
-
     /// <summary>
     /// Clears the entire render target with the current draw color.
     /// Call this at the beginning of each frame to clear the previous frame's contents.
     /// </summary>
     void Renderer::Clear() {
-        glClearColor(0.53f, 0.81f, 0.98f, 1);
+        glClearColor(0.0f, 0.0f, 0.0f, 1);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
+    /// <summary>
+    /// Presents the rendered frame to the screen by swapping buffers.
+    /// Call this at the end of each frame after all drawing operations are complete.
+    /// Uses double buffering: renders to back buffer, then swaps to front buffer for display.
+    /// </summary>
     void Renderer::Present() {
         SDL_GL_SwapWindow(m_window);
     }

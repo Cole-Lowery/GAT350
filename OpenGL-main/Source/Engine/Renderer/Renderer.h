@@ -1,10 +1,9 @@
 #pragma once
-#include <glad/glad.h>
 #include <SDL3/SDL.h>
 #include <SDL3_ttf/SDL_ttf.h>
 #include <SDL3_image/SDL_image.h>
+#include <glad/glad.h>
 #include <iostream>
-
 
 namespace neu {
 	/// <summary>
@@ -56,7 +55,6 @@ namespace neu {
 		/// </summary>
 		void Present();
 
-		
 		/// <summary>
 		/// Gets the width of the window/render target.
 		/// </summary>
@@ -81,6 +79,7 @@ namespace neu {
 		// SDL window handle
 		SDL_Window* m_window = nullptr;
 
+		// SDL renderer handle used for all drawing operations
 		SDL_GLContext m_context;
 	};
 }
