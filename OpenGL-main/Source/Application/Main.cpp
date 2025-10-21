@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
     vb->SetAttribute(2, 2, sizeof(Vertex), offsetof(Vertex, texcoord));
     */
     auto model3d = std::make_shared<neu::Model>();
-    model3d->Load("models/suzanne.obj");
+    model3d->Load("models/.obj");
 
     
     //shaders
