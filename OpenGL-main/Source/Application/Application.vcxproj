@@ -140,14 +140,15 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IMGUI_IMPL_OPENGL_LOADER_CUSTOM;_CRT_SECURE_NO_WARNINGS;APIENTRY=__stdcall;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Source\Engine;$(SolutionDir)Source\ThirdParty\SDL3\Include;$(SolutionDir)Source\ThirdParty\fmod\core\inc;$(SolutionDir)Source\ThirdParty\rapidjson\include;$(SolutionDir)Source\ThirdParty\glad\include;$(SolutionDir)Source\ThirdParty\glm;$(SolutionDir)Source\ThirdParty\assimp\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Source\Engine;$(SolutionDir)Source\ThirdParty\SDL3\Include;$(SolutionDir)Source\ThirdParty\fmod\core\inc;$(SolutionDir)Source\ThirdParty\rapidjson\include;$(SolutionDir)Source\ThirdParty\glad\include;$(SolutionDir)Source\ThirdParty\glm;$(SolutionDir)Source\ThirdParty\assimp\include;$(SolutionDir)\Source\ThirdParty\imgui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ApplicationPCH.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>ApplicationPCH.h</ForcedIncludeFiles>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
+      <DisableSpecificWarnings>4005</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -210,6 +211,9 @@
   <ItemGroup>
     <None Include="..\..\Build\Assets\Shaders\basic.frag" />
     <None Include="..\..\Build\Assets\Shaders\basic.vert" />
+    <None Include="..\..\Build\Assets\Shaders\basic_lit.frag" />
+    <None Include="..\..\Build\Assets\Shaders\basic_lit.prog" />
+    <None Include="..\..\Build\Assets\Shaders\basic_lit.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\Build\Assets\Textures\beast.png" />

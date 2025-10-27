@@ -62,6 +62,7 @@ namespace neu::math {
 	inline T Sign(T v) {
 		return (v < 0) ? (T)-1 : (v > 0) ? (T)1 : (T)0;
 	}
+
 	template<std::floating_point T>
 	inline T Lerp(T min, T max, T t) {
 		return min + (max - min) * t;
