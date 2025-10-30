@@ -10,10 +10,6 @@ namespace neu {
 		if (m_program) glDeleteProgram(m_program);
 	}
 
-	void Program::AttachShader(const res_t<Shader>& shader) {
-		glAttachShader(m_program, shader->m_shader);
-	}
-
 	bool Program::Load(const std::string& filename) {
 		// load program document
 		serial::document_t document;
@@ -21,8 +17,9 @@ namespace neu {
 			LOG_WARNING("Could not load program file: {}", filename);
 			return false;
 		}
-	
+
 		if (!m_program) m_program = glCreateProgram();
+
 		// get/add vertex shader
 		std::string shaderName;
 		SERIAL_READ_NAME(document, "vertex_shader", shaderName);
@@ -37,6 +34,9 @@ namespace neu {
 			}
 			AttachShader(shader);
 		}
+
+		if (!m_program) m_program = glCreateProgram();
+
 		// get/add fragment shader
 		SERIAL_READ_NAME(document, "fragment_shader", shaderName);
 		if (!shaderName.empty()) {
@@ -45,12 +45,17 @@ namespace neu {
 				LOG_WARNING("Could not get fragment shader: {}", shaderName);
 				glDeleteProgram(m_program);
 				m_program = 0;
+
 				return false;
 			}
 			AttachShader(shader);
 		}
 
 		return Link();
+	}
+
+	void Program::AttachShader(const res_t<Shader>& shader) {
+		glAttachShader(m_program, shader->m_shader);
 	}
 
 	bool Program::Link() {

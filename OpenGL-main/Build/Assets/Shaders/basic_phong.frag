@@ -1,23 +1,10 @@
 #version 460 core
- 
-layout (location = 0) in vec3 a_position;
-layout (location = 1) in vec2 a_texcoord;
-layout (location = 2) in vec3 a_normal;
 
-out vec2 v_texcoord;
-flat out vec3 v_color;
+in vec2 v_texcoord;
+in vec3 v_position;
+in vec3 v_normal;
 
-uniform mat4 u_model;
-uniform mat4 u_view;
-uniform mat4 u_projection;
-
-uniform vec3 u_ambient_light;
-
-uniform struct Light 
-{
-	vec3 position;
-	vec3 color;
-} u_light;
+out vec4 f_color;
 
 uniform struct Material 
 {
@@ -28,6 +15,15 @@ uniform struct Material
 	vec2 tiling;
 	vec2 offset;
 } u_material;
+
+uniform struct Light
+{
+	vec3 position;
+	vec3 color;
+} u_light;
+
+uniform vec3 u_ambient_light;
+uniform sampler2D u_texture;
 
 vec3 calculateLight(in vec3 position, in vec3 normal)
 {
@@ -40,6 +36,9 @@ vec3 calculateLight(in vec3 position, in vec3 normal)
 	vec3 reflection = reflect(-light_dir, normal);
 	vec3 view_dir = normalize(-position);
 	intensity = max(dot(reflection, view_dir), 0);
+	//vec3 view_dir = normalize(-postion);
+	//vec3 halfway_dir_ = normalize(light_dir + view_dir);
+	//intensity = max(dot(normal, halfway_dir),0)
 	intensity = pow(intensity, u_material.shininess);
 	vec3 specular = vec3(intensity);
 
@@ -48,13 +47,6 @@ vec3 calculateLight(in vec3 position, in vec3 normal)
 
 void main()
 {
-	v_texcoord = a_texcoord * u_material.tiling + u_material.offset;
-
-	mat4 model_view = u_view * u_model;
-	vec3 position = vec3(model_view * vec4(a_position, 1));
-	vec3 normal = normalize(mat3(model_view) * a_normal);
-
-	v_color = calculateLight(position,normal);
-
-	gl_Position = u_projection * u_view * u_model * vec4(a_position, 1.0);
+	vec3 color = calculateLight(v_position, v_normal);
+	f_color = texture(u_texture, v_texcoord) * vec4(color, 1);
 }

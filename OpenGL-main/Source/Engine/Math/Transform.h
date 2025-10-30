@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "Vector2.h"
+#include "Renderer/GUI.h"
 #include "Core/Serializable.h"
 #include <glm/glm.hpp>
 #define GLM_ENABLE_EXPERIMENTAL
@@ -46,7 +46,7 @@ namespace neu {
     /// - Matrix conversion can be cached when transformation doesn't change
     /// - Suitable for real-time applications and game loops
     /// </summary>
-    struct Transform : public ISerializable {
+    struct Transform : public ISerializable, GUI {
         glm::vec3 position{ 0, 0, 0 };
         glm::vec3 rotation{ 0, 0, 0 };
         glm::vec3 scale{ 1, 1, 1 };
@@ -73,5 +73,7 @@ namespace neu {
 		}
         
         void Read(const serial_data_t& value) override;
+
+        void UpdateGui() override;
     };
 }
