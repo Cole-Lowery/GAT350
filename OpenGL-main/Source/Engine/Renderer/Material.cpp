@@ -51,6 +51,7 @@ namespace neu {
 		program->SetUniform("u_material.tiling", tiling);
 		program->SetUniform("u_material.offset", offset);
 	}
+
 	void Material::UpdateGui() {
 		if (ImGui::CollapsingHeader("Material", ImGuiTreeNodeFlags_DefaultOpen)) {
 			ImGui::Text("Name: %s", name.c_str());

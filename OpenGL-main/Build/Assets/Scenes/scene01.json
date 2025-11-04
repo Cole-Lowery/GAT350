@@ -1,23 +1,118 @@
- {
-     "actors": [
+{
+  "actors": [
+    {
+      "name": "bone",
+      "persistent": true,
+      "transform": {
+        "position": [ -2, -2, 0 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 0.5, 0.5, 0.5 ]
+      },
+      "components": [
         {
-          "name": "ball",
-            "persistent": true,
-            "transform": {
-                "position": [
-                    0,
-                    0,
-                    0
-                ],
-                "rotation": [ 0, 180, 0 ],
-                "scale": [ 1, 1, 1 ]
-            },
-            "components": [
-                {
-                    "type": "ModelRenderer",
-                    "model": "models/sphere.obj",
-                    "material": "materials/spot.mat"
-                }
-            ]
+          "type": "ModelRenderer",
+          "model": "Models/Halloween02/bone4.fbx",
+          "material": "Materials/spot.mat"
         }
-  }
+      ]
+    },
+    {
+      "name": "butcher knife",
+      "persistent": true,
+      "transform": {
+        "position": [ -1, -2, 0 ],
+        "rotation": [ 0, 180, 0 ],
+        "scale": [ 0.5, 0.5, 0.5 ]
+      },
+      "components": [
+        {
+          "type": "ModelRenderer",
+          "model": "Models/Halloween02/butcher_knife.fbx",
+          "material": "Materials/spot.mat"
+        }
+      ]
+    },
+    {
+      "name": "Coffin",
+      "persistent": true,
+      "transform": {
+        "position": [ 0, -2, 0 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 0.5, 0.5, 0.5 ]
+      },
+      "components": [
+        {
+          "type": "ModelRenderer",
+          "model": "Models/Halloween02/Coffin_basic.fbx",
+          "material": "Materials/spot.mat"
+        }
+      ]
+    },
+    {
+      "name": "Dead Tree",
+      "persistent": true,
+      "transform": {
+        "position": [ 1.2, -2, -2 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 0.5, 0.5, 0.5 ]
+      },
+      "components": [
+        {
+          "type": "ModelRenderer",
+          "model": "Models/Halloween02/dead_tree1.fbx",
+          "material": "Materials/spot.mat"
+        }
+      ]
+    },
+    {
+      "name": "Gravestone",
+      "persistent": true,
+      "transform": {
+        "position": [ 2, -2, 0 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 0.5, 0.5, 0.5 ]
+      },
+      "components": [
+        {
+          "type": "ModelRenderer",
+          "model": "Models/Gravestone_Skull.fbx",
+          "material": "Materials/spot.mat"
+        }
+      ]
+    },
+    {
+      "name": "camera",
+      "persistent": true,
+      "transform": {
+        "position": [ 0, 0, 5 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "CameraComponent"
+        },
+        {
+          "type": "FirstPersonController",
+          "speed": 5,
+          "sensitivity": 0.2
+        }
+      ]
+    },
+    {
+      "name": "light",
+      "persistent": true,
+      "transform": {
+        "position": [ 5, 5, 0 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "LightComponent",
+          "color": [ 1, 1, 0 ]
+        }
+      ]
+    }
+  ]
+}

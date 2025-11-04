@@ -24,7 +24,7 @@ uniform mat4 u_projection;
 
 void main()
 {
-	v_texcoord = a_texcoord;
+	v_texcoord = (a_texcoord * u_material.tiling) + u_material.offset;
 
 	mat4 model_view = u_view * u_model;
 	v_position = vec3(model_view * vec4(a_position, 1));

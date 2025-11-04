@@ -32,6 +32,10 @@
 #include "Event/EventManager.h"
 #include "Event/Observer.h"
 
+//GUI
+#include "GUI/Editor.h"
+#include "GUI/GUI.h"
+
 // input
 #include "Input/InputSystem.h"
 
@@ -53,6 +57,12 @@
 // physics
 #include "Physics/Collidable.h"
 
+// componednts
+#include "Components/ModelRenderer.h"
+#include "Components/CameraComponent.h"
+#include "Components/LightComponent.h"
+#include "Components/FirstPersonController.h"
+
 // third-party library
 #include <fmod.hpp>
 #include <fmod_errors.h>
@@ -73,6 +83,7 @@
 #include <vector>
 #include <map>
 #include <list>
+#include <set>
 #include <cstdlib>
 #include <random>
 #include <algorithm>
