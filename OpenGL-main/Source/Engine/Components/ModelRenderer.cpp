@@ -4,13 +4,17 @@
 namespace neu {
 	FACTORY_REGISTER(ModelRenderer)
 
-	void ModelRenderer::Update(float dt) {
+		void ModelRenderer::Update(float dt) {
 
 	}
 
 	void ModelRenderer::Draw(Renderer& renderer) {
 		material->Bind();
 		material->program->SetUniform("u_model", owner->transform.GetMatrix());
+
+		glDepthMask(enableDepth);
+		glCullFace(cullFace);
+
 		model->Draw(GL_TRIANGLES);
 	}
 
@@ -26,6 +30,12 @@ namespace neu {
 		SERIAL_READ_NAME(value, "material", materialName);
 
 		material = Resources().Get<Material>(materialName);
+
+		SERIAL_READ(value, enableDepth);
+
+		std::string cullFaceName;
+		SERIAL_READ_NAME(value, "cullFace", cullFaceName);
+		if (equalsIgnoreCase(cullFaceName, "front")) cullFace = GL_FRONT;
 	}
 	void ModelRenderer::UpdateGui() {
 	}
