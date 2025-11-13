@@ -19,7 +19,7 @@
       ]
     },
     {
-      "name": "crate",
+      "name": "spot",
       "persistent": true,
       "transform": {
         "position": [ 0, 0, 0 ],
@@ -29,8 +29,12 @@
       "components": [
         {
           "type": "ModelRenderer",
-          "model": "Models/Cube.obj",
-          "material": "Materials/crate.mat"
+          "model": "Models/spot.obj",
+          "material": "Materials/refraction.mat"
+        },
+        {
+          "type": "RotationComponent",
+          "rotate": [0,90,0]
         }
       ]
     },

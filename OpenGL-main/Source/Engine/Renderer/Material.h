@@ -29,6 +29,7 @@ namespace neu {
 		float shininess{ 2 };
 		glm::vec2 tiling{ 1, 1 };
 		glm::vec2 offset{ 0, 0 };
+		float ior{ 1.3f };
 
 		res_t<Program> program;
 		res_t<Texture> baseMap;

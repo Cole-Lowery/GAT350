@@ -1,0 +1,4 @@
+{
+	"program": "shaders/reflection.prog",
+	"cubeMap": "Textures/Earth_cube_map/posx.jpg Textures/Earth_cube_map/negx.jpg Textures/Earth_cube_map/posy.jpg Textures/Earth_cube_map/negy.jpg Textures/Earth_cube_map/posz.jpg Textures/Earth_cube_map/negz.jpg"
+}
