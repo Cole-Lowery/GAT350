@@ -44,6 +44,10 @@ namespace neu {
             requires std::derived_from<T, Resource>
         res_t<T> Get(const std::string& name, Args&& ... args);
 
+		template<typename T = Resource>
+			requires std::derived_from<T, Resource>
+        std::vector<T*> GetByType();
+
         /// <summary>
         /// Retrieves or loads a resource with separate ID and name parameters.
         /// The ID is used for caching (converted to lowercase), while the name is passed to Load().
@@ -98,6 +102,19 @@ namespace neu {
         requires std::derived_from<T, Resource>
     inline res_t<T> ResourceManager::Get(const std::string& name, Args&& ... args) {
         return GetWithID<T>(name, name, std::forward<Args>(args)...);
+    }
+
+    template<typename T>
+		requires std::derived_from<T, Resource>
+    inline std::vector<T*> ResourceManager::GetByType()
+    {
+		std::vector<T*> results;
+        for (auto& resource : m_resources) {
+			auto result = dynamic_cast<T*>(resource.second.get());
+			if (result) results.push_back(result);
+        }
+
+        return results;
     }
 
     /// <summary>

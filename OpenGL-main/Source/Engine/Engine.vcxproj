@@ -204,6 +204,7 @@
     <ClCompile Include="..\ThirdParty\imgui\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\ThirdParty\imgui\backends\imgui_impl_sdl3.cpp" />
     <ClCompile Include="..\ThirdParty\imgui\imgui.cpp" />
+    <ClCompile Include="..\ThirdParty\imgui\ImGuiFileDialog.cpp" />
     <ClCompile Include="..\ThirdParty\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\ThirdParty\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\ThirdParty\imgui\imgui_widgets.cpp" />
@@ -244,6 +245,8 @@
     <ClCompile Include="Renderer\VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\ThirdParty\imgui\ImGuiFileDialog.h" />
+    <ClInclude Include="..\ThirdParty\imgui\ImGuiFileDialogConfig.h" />
     <ClInclude Include="Audio\AudioChannel.h" />
     <ClInclude Include="Audio\AudioClip.h" />
     <ClInclude Include="Audio\AudioSystem.h" />

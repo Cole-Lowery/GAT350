@@ -18,7 +18,7 @@ vec3 normal = normalize(mat3(u_model) * a_normal);
 vec3 viewPosition = inverse(u_view)[3].xyz;
 vec3 viewDir = normalize(position - viewPosition);
 
-v_texcoord = refracrt(viewDir, normal, 1 / u_ior);
+v_texcoord = refract(viewDir, normal, 1 / u_ior);
 
 	
 	gl_Position = u_projection * u_view * vec4(a_position, 1.0);

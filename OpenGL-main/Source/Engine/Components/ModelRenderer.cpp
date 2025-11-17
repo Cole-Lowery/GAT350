@@ -38,5 +38,13 @@ namespace neu {
 		if (equalsIgnoreCase(cullFaceName, "front")) cullFace = GL_FRONT;
 	}
 	void ModelRenderer::UpdateGui() {
+		if (model) { 
+			ImGui::Text("Model: %s", model->name.c_str());
+			Editor::GetDialogResource<Model>(model, "ModelDialog", "Open model", "Model file (*.obj;*.fbx){.obj,.fbx},.*");
+		}
+		if (material) {
+			ImGui::Text("Material: %s", material->name.c_str()); 
+			Editor::GetDialogResource<Material>(material, "MaterialDialog", "Open material", "Material file (*.mat){.mat},.*");
+		}
 	}
 }

@@ -7,6 +7,8 @@ namespace neu {
 		//CLASS_PROTOTYPE(Cubemap)
 
 		bool Load(const std::string& filenames);
+
+		void UpdateGui() override {}
 	};
 
 }

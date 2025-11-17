@@ -100,6 +100,35 @@ namespace neu {
 			ImGui::Text("Name: %s", name.c_str());
 			ImGui::Text("Shader: %s", program->name.c_str());
 
+			ImGui::Separator();
+			if (baseMap) {
+				ImGui::Text("Base Map: %s", baseMap->name.c_str());
+				Editor::ShowTexture(*baseMap, 32, 32);
+				Editor::GetDialogResource<Texture>(baseMap, "BaseMapDlg", "Open Teture", "Image (*.png; *.jpg; *.bmp;*jpeg;*tga){.png,.jpg,.bmp,.jpeg,.tga}");
+			}
+
+			ImGui::Separator();
+			if (specularMap) {
+				ImGui::Text("Specular Map: %s", specularMap->name.c_str());
+				Editor::ShowTexture(*specularMap, 32, 32);
+				Editor::GetDialogResource<Texture>(specularMap, "SpecularMapDlg", "Open Teture", "Image (*.png; *.jpg; *.bmp;*jpeg;*tga){.png,.jpg,.bmp,.jpeg,.tga}");
+			}
+
+			ImGui::Separator();
+			if (emissiveMap) {
+				ImGui::Text("emissive Map: %s", emissiveMap->name.c_str());
+				Editor::ShowTexture(*emissiveMap, 32, 32);
+				Editor::GetDialogResource<Texture>(emissiveMap, "emissiveMapDlg", "Open Teture", "Image (*.png; *.jpg; *.bmp;*jpeg;*tga){.png,.jpg,.bmp,.jpeg,.tga}");
+			}
+
+			ImGui::Separator();
+			if (normalMap) {
+				ImGui::Text("Normal Map: %s", normalMap->name.c_str());
+				Editor::ShowTexture(*normalMap, 32, 32);
+				Editor::GetDialogResource<Texture>(normalMap, "NormalMapDlg", "Open Teture", "Image (*.png; *.jpg; *.bmp;*jpeg;*tga){.png,.jpg,.bmp,.jpeg,.tga}");
+			}
+
+
 			if (baseMap) ImGui::Text("Name: %s", baseMap->name.c_str());
 			ImGui::ColorEdit3("Base Color", glm::value_ptr(baseColor));
 
