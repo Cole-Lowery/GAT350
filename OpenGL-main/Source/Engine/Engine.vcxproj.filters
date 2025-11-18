@@ -158,6 +158,9 @@
     <ClCompile Include="..\ThirdParty\imgui\ImGuiFileDialog.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\RenderTexture.cpp">
+      <Filter>Source\Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Random.h">
@@ -312,6 +315,9 @@
     </ClInclude>
     <ClInclude Include="..\ThirdParty\imgui\ImGuiFileDialogConfig.h">
       <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderTexture.h">
+      <Filter>Source\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
