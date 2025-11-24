@@ -1,17 +1,33 @@
 #version 460 core
 
+#define MAX_LIGHTS 5
+#define POINT 0
+#define DIRECTIONAL 1
+#define SPOT 2
+
+// a_### = attributes/inputs
 layout (location = 0) in vec3 a_position;
 layout (location = 1) in vec2 a_texcoord;
 layout (location = 2) in vec3 a_normal;
 layout (location = 3) in vec3 a_tangent;
 
-out VS_OUT
-{
+out VS_OUT {
+	// v_### = varyings (vertex -> fragment)
 	vec2 texcoord;
 	vec3 position;
 	vec3 normal;
 	mat3 tbn;
 } vs_out;
+
+// u_### = uniform
+uniform mat4 u_model;
+uniform mat4 u_view;
+uniform mat4 u_projection;
+uniform int u_numLights = 5;
+
+uniform sampler2D u_baseMap;
+uniform sampler2D u_specularMap;
+uniform sampler2D u_emissiveMap;
 
 uniform struct Material 
 {
@@ -23,12 +39,19 @@ uniform struct Material
 	uint parameters;
 } u_material;
 
-uniform mat4 u_model;
-uniform mat4 u_view;
-uniform mat4 u_projection;
+uniform struct Light {
+	int type;
+	vec3 position;
+	vec3 direction;
+	vec3 color;
+	float intensity;
+	float range;
+	float outerSpotAngle;
+	float innerSpotAngle;
+} u_lights[MAX_LIGHTS];
 
-void main()
-{
+
+void main() {
 	vs_out.texcoord = (a_texcoord * u_material.tiling) + u_material.offset;
 
 	mat4 model_view = u_view * u_model;
@@ -36,11 +59,11 @@ void main()
 
 	vs_out.texcoord = (a_texcoord * u_material.tiling) + u_material.offset;
 	vs_out.position = vec3(model_view * vec4(a_position, 1));
-	vs_out.normal = normalize(normal_matrix * a_normal);
+	vs_out.normal = normalize(mat3(model_view) * a_normal);
 
+	// Calculate TBN matrix
 	vec3 N = normalize(normal_matrix * a_normal);
 	vec3 T = normalize(normal_matrix * a_tangent);
-	// re-orthogonalize T with respect to N
 	T = normalize(T - dot(T, N) * N);
 	vec3 B = normalize(cross(N, T));
 	vs_out.tbn = mat3(T, B, N);

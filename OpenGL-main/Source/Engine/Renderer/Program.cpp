@@ -1,4 +1,3 @@
-#include "EnginePCH.h"
 #include "Program.h"
 
 namespace neu {
@@ -34,8 +33,6 @@ namespace neu {
 			}
 			AttachShader(shader);
 		}
-
-		if (!m_program) m_program = glCreateProgram();
 
 		// get/add fragment shader
 		SERIAL_READ_NAME(document, "fragment_shader", shaderName);
@@ -102,7 +99,7 @@ namespace neu {
 
 	void Program::SetUniform(const std::string& name, bool value) {
 		GLint location = GetUniformLocation(name);
-		if (location != -1) glUniform1ui(location, (int)value);
+		if (location != -1) glUniform1ui(location, value);
 	}
 
 	void Program::SetUniform(const std::string& name, const glm::vec2& value) {
@@ -115,7 +112,6 @@ namespace neu {
 		if (location != -1) glUniform3f(location, value.x, value.y, value.z);
 	}
 
-	
 	void Program::SetUniform(const std::string& name, const glm::mat3& value)
 	{
 		GLint location = GetUniformLocation(name);
@@ -127,13 +123,12 @@ namespace neu {
 		GLint location = GetUniformLocation(name);
 		if (location != -1) glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
 	}
-	
 
 	GLint Program::GetUniformLocation(const std::string& name) {
 		// find uniform location in map
 		auto it = m_uniformLocations.find(name);
 		// if not found, get uniform in program
-		if (it ==  m_uniformLocations.end())
+		if (it == m_uniformLocations.end())
 		{
 			// get uniform in program, return -1 if not found
 			GLint location = glGetUniformLocation(m_program, name.c_str());

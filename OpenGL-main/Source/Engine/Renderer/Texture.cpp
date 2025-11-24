@@ -7,8 +7,7 @@ namespace neu {
     /// Destroys the SDL texture if it exists, freeing GPU memory.
     /// </summary>
     Texture::~Texture() {
-        // If texture exists, destroy texture to free GPU resources
-		if (m_texture) glDeleteTextures(1, &m_texture);
+        if (m_texture) glDeleteTextures(1, &m_texture);
     }
 
     /// <summary>
@@ -21,6 +20,32 @@ namespace neu {
     /// <param name="filename">Path to the image file to load</param>
     /// <param name="renderer">Reference to the Renderer that provides the SDL_Renderer context</param>
     /// <returns>True if the texture was successfully loaded and created; otherwise, false</returns>
+    //bool Texture::Load(const std::string& filename) {
+    //    // Load image onto a CPU-side surface
+    //    // SDL_image supports various formats: PNG, JPG, BMP, GIF, etc.
+    //    SDL_Surface* surface = IMG_Load(filename.c_str());
+    //    if (!surface) {
+    //        LOG_ERROR("Could not load image: {}", filename);
+    //        return false;
+    //    }
+
+    //    const SDL_PixelFormatDetails* details = SDL_GetPixelFormatDetails(surface->format);
+
+    //    int channels = details->bytes_per_pixel;
+    //    GLenum internalFormat = (channels == 4) ? GL_RGBA8 : GL_RGB8;
+    //    GLenum format = (channels == 4) ? GL_RGBA : GL_RGB;
+
+    //    glGenTextures(1, &m_texture);
+    //    glBindTexture(m_target, m_texture);
+    //    glActiveTexture(GL_TEXTURE1);
+
+    //    glTexImage2D(m_target, 0, internalFormat, surface->w, surface->h, format, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
+
+    //    SDL_DestroySurface(surface);
+
+    //    return true;
+    //} 
+
     bool Texture::Load(const std::string& filename) {
         // Load image onto a CPU-side surface
         // SDL_image supports various formats: PNG, JPG, BMP, GIF, etc.
@@ -30,21 +55,21 @@ namespace neu {
             return false;
         }
 
-		SDL_FlipSurface(surface, SDL_FLIP_VERTICAL);
+        SDL_FlipSurface(surface, SDL_FLIP_VERTICAL);
 
-		const SDL_PixelFormatDetails* details = SDL_GetPixelFormatDetails(surface->format);
+        const SDL_PixelFormatDetails* details = SDL_GetPixelFormatDetails(surface->format);
 
         int channels = details->bytes_per_pixel;
         GLenum internalFormat = (channels == 4) ? GL_RGBA8 : GL_RGB8;
         GLenum format = (channels == 4) ? GL_RGBA : GL_RGB;
 
-		m_size.x = surface->w;
-        m_size.y = surface->h;
+        m_size.x = (float)surface->w;
+        m_size.y = (float)surface->h;
 
-		glGenTextures(1, &m_texture);
-		glBindTexture(m_target, m_texture);
+        glGenTextures(1, &m_texture);
+        glBindTexture(m_target, m_texture);
 
-		glTexImage2D(m_target, 0, internalFormat, surface->w, surface->h, 0, format, GL_UNSIGNED_BYTE, surface->pixels);
+        glTexImage2D(m_target, 0, internalFormat, surface->w, surface->h, 0, format, GL_UNSIGNED_BYTE, surface->pixels);
 
         // Texture parameters
         glTexParameteri(m_target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -55,15 +80,14 @@ namespace neu {
 
         glActiveTexture(GL_TEXTURE0);
 
-		SDL_DestroySurface(surface);
+        SDL_DestroySurface(surface);
 
         return true;
     }
-    void Texture::UpdateGui()
-    {
-		ImGui::Text("Name: %s", file::GetFilename(name).c_str());
-		ImGui::Text("Size: %dx%d", m_size.x, m_size.y);
-		Editor::ShowTexture(*this, 128, 128);
-    }
 
+    void Texture::UpdateGui() {
+        ImGui::Text("Name: %s", file::GetFilename(name).c_str());
+        ImGui::Text("Size: %dx%d", (int)m_size.x, (int)m_size.y);
+        Editor::ShowTexture(*this, 64, 64);
+    }
 }

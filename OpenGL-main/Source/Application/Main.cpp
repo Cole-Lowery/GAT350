@@ -1,3 +1,4 @@
+#include "Renderer/Shader.h"
 
 int main(int argc, char* argv[]) {
     neu::file::SetCurrentDirectory("Assets");
@@ -7,15 +8,29 @@ int main(int argc, char* argv[]) {
     LOG_INFO("initialize engine...");
     neu::GetEngine().Initialize();
 
-    // initialize scene
+
     SDL_Event e;
     bool quit = false;
 
+    auto renderTexture = std::make_shared<neu::RenderTexture>();
+    renderTexture->Create(512, 512);
+    neu::Resources().AddResource("renderTexture", renderTexture);
+
+   renderTexture = std::make_shared<neu::RenderTexture>();
+    renderTexture->Create(1024, 1024);
+    neu::Resources().AddResource("postprocessTexture", renderTexture);
+
+
     // initialize scene
+
+    // OPEN GL
+    // Model
+    // Initialize Scene
     auto scene = std::make_unique<neu::Scene>();
-    scene->Load("scenes/scene01.json");
+    scene->Load("scenes/scene03.json");
     scene->Start();
 
+    // Editor
     auto editor = std::make_unique<neu::Editor>();
 
     // MAIN LOOP
@@ -24,26 +39,27 @@ int main(int argc, char* argv[]) {
             if (e.type == SDL_EVENT_QUIT) {
                 quit = true;
             }
-			ImGui_ImplSDL3_ProcessEvent(&e);
+            ImGui_ImplSDL3_ProcessEvent(&e);
         }
 
         // update
         neu::GetEngine().Update();
+
         float dt = neu::GetEngine().GetTime().GetDeltaTime();
+
         if (neu::GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
 
-        //scene
         scene->Update(dt);
-
-        //editor
         editor->Begin();
         editor->UpdateGui(*scene);
+
+        // Model Matrix
 
         // draw
         neu::GetEngine().GetRenderer().Clear();
 
         scene->Draw(neu::GetEngine().GetRenderer());
-        
+
         // draw ImGui
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

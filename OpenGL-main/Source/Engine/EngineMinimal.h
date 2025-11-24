@@ -59,11 +59,15 @@
 // physics
 #include "Physics/Collidable.h"
 
-// componednts
+// components
 #include "Components/ModelRenderer.h"
 #include "Components/CameraComponent.h"
 #include "Components/LightComponent.h"
 #include "Components/FirstPersonController.h"
+#include "Components/RendererComponent.h"
+#include "Components/RotationComponent.h"
+#include "Components/PostProcessComponent.h"
+
 
 // third-party library
 #include <fmod.hpp>

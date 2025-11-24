@@ -119,6 +119,24 @@
     <None Include="..\..\Build\Assets\Materials\squirrel.mat">
       <Filter>Assets\Materials</Filter>
     </None>
+    <None Include="..\..\Build\Assets\Materials\postprocess.mat">
+      <Filter>Assets\Materials</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Shaders\postprocess.vert">
+      <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Shaders\postprocess.frag">
+      <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Shaders\postprocess.prog">
+      <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Scenes\scene03.json">
+      <Filter>Assets\Scenes</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Materials\rocks.mat">
+      <Filter>Assets\Materials</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\Build\Assets\Textures\beast.png">
