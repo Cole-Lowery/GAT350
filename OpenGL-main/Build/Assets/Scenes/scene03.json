@@ -1,4 +1,10 @@
 {
+  "ambient_light": [
+    0.2,
+    0.2,
+    0.2
+  ],
+  "post_process": true,
   "actors": [
     {
       "name": "light",
@@ -32,7 +38,14 @@
           "range": 30,
           "lightType": "directional",
           "innerSpotAngle": 30,
-          "outerSpotAngle": 50
+          "outerSpotAngle": 50,
+          "shadowCaster": true
+        },
+        {
+          "type": "CameraComponent",
+          "projectionType": "orthographic",
+          "shadowCamera": true,
+          "outputTexture": "shadowTexture"
         }
       ]
     },
@@ -40,9 +53,21 @@
       "name": "plane",
       "persistent": true,
       "transform": {
-        "position": [ 0, -1, 0 ],
-        "rotation": [ 0, 0, 0 ],
-        "scale": [ 1, 1, 1 ]
+        "position": [
+          0,
+          -1,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
       },
       "components": [
         {
@@ -81,6 +106,34 @@
       ]
     },
     {
+      "name": "cube",
+      "persistent": true,
+      "transform": {
+        "position": [
+          2,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          180,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": [
+        {
+          "type": "ModelRenderer",
+          "model": "models/cube.obj",
+          "material": "materials/crate.mat"
+        }
+      ]
+    },
+    {
       "name": "post procees",
       "persistent": true,
       "active": false,
@@ -114,8 +167,8 @@
       "persistent": true,
       "transform": {
         "position": [
-          0,
           5,
+          2,
           0
         ],
         "rotation": [
@@ -133,7 +186,7 @@
         {
           "type": "ModelRenderer",
           "model": "models/quad.obj",
-          "material": "materials/rtt.mat"
+          "material": "materials/shadow.mat"
         }
       ]
     },

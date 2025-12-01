@@ -2,7 +2,7 @@
 
 #define GRAYSCALE	(1 << 0)
 #define COLORTINT	(1 << 1)
-#define SCANLINE	(1 << 2)
+// add rest of bit masks
 
 in vec2 v_texcoord;
 
@@ -10,22 +10,30 @@ out vec4 f_color;
 
 // post process controls
 uniform uint u_parameters = 0;
-uniform float u_time = 0;
-uniform float u_intensity = 1.0;
-uniform vec3 u_colorTint = vec3(1, 0, 0);
+uniform vec3 u_colorTint = vec3(1, 1, 1);
+
+uniform float u_time = 0;	// used in random function
+uniform float u_blend = 0;  // blend between original and postprocess color
 
 uniform sampler2D u_baseMap;
+
+// There is no random function in GLSL, uses math function to generate psuedo random number
+// https://thebookofshaders.com/10/
+float random(vec2 st) 
+{
+	return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453);
+}
 
 void main()
 {
 	vec4 color = texture(u_baseMap, v_texcoord);
 	vec4 postprocess = color;
+
+	if ((u_parameters & GRAYSCALE) != 0u)	postprocess = <rgb is the average value of the rgb values>
+	if ((u_parameters & COLORTINT) != 0u)	postprocess = <multiply postprocess with u_colorTint>
+	if ((u_parameters & SCANLINE) != 0u)	postprocess = (int(gl_FragCoord.y) % 3 != 0) ? vec4(0, 0, 0, 1) : postprocess;
+	if ((u_parameters & GRAIN) != 0u)		postprocess = postprocess * random(gl_FragCoord.xy + u_time);
+	if ((u_parameters & INVERT) != 0u)		postprocess = <invert color>
 	
-	//postprocess = vec4(1) - postprocess;
-	postprocess = vec4(u_colorTint,1);
-
-
-	//if((u_parameters & GRAYSCALE) != 0) 
-
-	f_color = postprocess;
+	f_color = mix(color, postprocess, u_blend); // mix colors using u_blend (0-1)
 }

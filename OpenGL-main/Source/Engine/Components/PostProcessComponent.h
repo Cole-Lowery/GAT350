@@ -5,10 +5,12 @@ namespace neu {
 	public:
 		enum class Parameters : uint32_t {
 			None		= 0,
-			GrayScale = (1 << 0),
-			ColorTint = (1 << 1),
-			ScanLines = (1 << 2),
-
+			GrayScale	= (1 << 0),
+			ColorTint	= (1 << 1),
+			ScanLines	= (1 << 2),
+			Grain		= (1 << 3),
+			Invert		= (1 << 4),
+			Vignette	= (1 << 5),
 		};
 
 	public:
@@ -22,6 +24,11 @@ namespace neu {
 
 	public:
 		Parameters parameters = Parameters::None;
-		glm::vec3 colorTint{ 1,1,1 };
+		glm::vec3 colorTint{ 1, 1, 1 };
+		float blend{ 1.0f };
+
+		// effect-specific controls
+		float grainStrength{ 0.2f };
+		float vignetteStrength{ 0.5f };
 	};
 }
