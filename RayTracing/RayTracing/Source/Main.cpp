@@ -1,10 +1,9 @@
 #include "Renderer.h"
 #include "Framebuffer.h"
 #include "Camera.h"
-<<<<<<< HEAD
 #include "Scene.h"
-=======
->>>>>>> 7238d2794153f8594556bd414f10e30e243dadf1
+#include "Sphere.h"
+#include "Random.h"
 
 #include <iostream>
 
@@ -16,39 +15,45 @@ int main() {
 	renderer.Initialize();
 	renderer.CreateWindow("Ray Tracer", SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	float aspectRatio = (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT;
-
 	Framebuffer framebuffer(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-<<<<<<< HEAD
 	float aspectRatio = (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT;
 	Camera camera(70.0f, aspectRatio);
 	camera.SetView({ 0, 0, 5 }, { 0, 0, 0 });
 
 	Scene scene;
 
-=======
-	Camera camera(70.0f, aspectRatio);
-	camera.SetView({ 0, 0, 5 }, { 0, 0, 0 });
+	scene.AddObject(std::make_unique<Sphere>(
+		glm::vec3{ 0, 0, 0 },
+		1.5f,
+		color3_t{ 1, 0, 0 }
+	));
 
->>>>>>> 7238d2794153f8594556bd414f10e30e243dadf1
+	for (int i = 0; i < 5; i++) {
+		glm::vec3 pos{
+			random::getReal(-3.0f, 3.0f),
+			random::getReal(-3.0f, 3.0f),
+			random::getReal(-3.0f, 3.0f)
+		};
+
+		color3_t col{
+			random::getReal(0.0f, 1.0f),
+			random::getReal(0.0f, 1.0f),
+			random::getReal(0.0f, 1.0f)
+		};
+
+		scene.AddObject(std::make_unique<Sphere>(pos, 1.0f, col));
+	}
+
 	SDL_Event event;
 	bool quit = false;
 	while (!quit) {
 		while (SDL_PollEvent(&event)) {
-<<<<<<< HEAD
 			
 			if (event.type == SDL_EVENT_QUIT) {
 				quit = true;
 			}
 			
-=======
-
-			if (event.type == SDL_EVENT_QUIT) {
-				quit = true;
-			}
-
->>>>>>> 7238d2794153f8594556bd414f10e30e243dadf1
 			if (event.type == SDL_EVENT_KEY_DOWN && event.key.scancode == SDL_SCANCODE_ESCAPE) {
 				quit = true;
 			}
@@ -57,10 +62,7 @@ int main() {
 		framebuffer.Clear({ 0, 0, 0, 255 });
 		for (int i = 0; i < 300; i++) framebuffer.DrawPoint(rand() % SCREEN_WIDTH, rand() % SCREEN_HEIGHT, { 255, 255, 255, 255 });
 
-<<<<<<< HEAD
-		scene.Render(framebuffer, camera);
-=======
->>>>>>> 7238d2794153f8594556bd414f10e30e243dadf1
+		scene.Render(framebuffer, camera, 50);
 		framebuffer.Update();
 
 		renderer.CopyFramebuffer(framebuffer);
