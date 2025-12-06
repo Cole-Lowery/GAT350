@@ -1,6 +1,10 @@
-#include "Renderer.h"
+#include "Camera.h"
 #include "Framebuffer.h"
+#include "Renderer.h"
+#include "Scene.h"
+#include <glm/glm.hpp>
 #include <iostream>
+#include "Random.h"
 
 Renderer::~Renderer()
 {
@@ -50,6 +54,7 @@ bool Renderer::CreateWindow(const std::string& name, int width, int height, bool
     return true;
 }
 
+
 void Renderer::Show() {
     // present the renderer to the screen
     SDL_RenderPresent(renderer);
@@ -58,4 +63,27 @@ void Renderer::Show() {
 void Renderer::CopyFramebuffer(const Framebuffer& framebuffer) {
     // copies the framebuffer texture to the renderer for display
     SDL_RenderTexture(renderer, framebuffer.texture, NULL, NULL);
+}
+
+void Renderer::Render(Framebuffer& framebuffer, const Camera& camera, int numSamples){
+	Scene scene;
+    for (int y = 0; y < framebuffer.height; y++) {
+        for (int x = 0; x < framebuffer.width; x++) {
+                color3_t color{ 0 };
+            for (int s = 0; s < 500; s++) {
+                glm::vec2 pixel{ x, y };
+				pixel += glm::vec2{ random::getReal(0.0f, 1.0f), random::getReal(0.0f, 1.0f) }; 
+
+                glm::vec2 point = pixel / glm::vec2{ framebuffer.width, framebuffer.height };
+                point.y = 1 - point.y;
+
+                ray_t ray = camera.GetRay(point);
+
+                raycastHit_t raycastHit; 
+				color += scene.Trace(ray, 0, 100, raycastHit);
+            }
+            color = color / static_cast<float>(numSamples);
+            framebuffer.DrawPoint(x, y, ColorConvert(color));
+        }
+    }
 }

@@ -1,14 +1,13 @@
 #include "Camera.h"
-#include <glm/gtc/constants.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
 void Camera::SetView(const glm::vec3& eye, const glm::vec3& target, const glm::vec3& up) {
 	this->eye = eye;
 
-	this->forward = glm::normalize(target - eye);
-	this->right = glm::normalize(glm::cross(forward, up));
-	this->up = glm::normalize(glm::cross(right, forward));
-	
+	// create camera axis
+	this->forward = normalize(target - eye); //normalized direction vector (target <-- eye)
+	this->right = normalize(cross(forward, up)); //normalized vector from the cross product of the forward and up vector
+	this->up = normalize(cross(right, forward)); //normalized vector from the cross product of the right and forward vector
+
 	CalculateViewPlane();
 }
 
@@ -16,22 +15,21 @@ ray_t Camera::GetRay(const glm::vec2& uv) const {
 	ray_t ray;
 
 	ray.origin = eye;
+	ray.direction = lowerLeft + horizontal * uv.x + vertical * uv.y - eye; //lower left position + horizontal vector * uv.x + vertical vector * uv.y - camera eye;
 
-	glm::vec3 point = lowerLeft + uv.x * horizontal + uv.y * vertical;
-	ray.direction = glm::normalize(point - eye);
-	
 	return ray;
 }
 
 void Camera::CalculateViewPlane() {
 	float theta = glm::radians(fov);
 
-	float halfHeight = tan(theta * 0.5f);
-	float halfWidth = aspectRatio * halfHeight;
+	float halfHeight = glm::tan(theta * 0.5f);//trig function that is opposite over adjacent, use half theta as parameter
+	float halfWidth = halfHeight * aspectRatio;//scale halfHeight by aspect ratio
 
-	horizontal = right * (halfWidth * 2.0f);
-	vertical = up * (halfHeight * 2.0f);
+	horizontal = right * (halfWidth * 2);//right vector * width (how do you get full width from half width?)
+	vertical = up * (halfHeight * 2);//up vector * height (how do you get full height from half height?)
 
-	lowerLeft = eye + forward - (horizontal * 0.5f) - (vertical * 0.5f);
+	lowerLeft = eye - (right * halfWidth) - (up * halfHeight) + forward;
+	//lowerLeft = eye - (half horizontal) - (half vertical) + forward;
 }
 

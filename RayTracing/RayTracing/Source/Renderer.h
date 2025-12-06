@@ -13,6 +13,7 @@ public:
 	void Show();
 
 	void CopyFramebuffer(const class Framebuffer& framebuffer);
+	void Render(class Framebuffer& framebuffer, const class Camera& camera, int numSamples = 10);
 
 public:
 	int width{ 0 };
