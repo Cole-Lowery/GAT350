@@ -2,69 +2,71 @@
 #include "Framebuffer.h"
 #include "Camera.h"
 #include "Color.h"
+#include "Object.h"
+#include "Random.h"
 #include <iostream>
 
-void Scene::Render(Framebuffer& framebuffer, const Camera& camera) {
-	// trace ray for every framebuffer pixel
-	for (int y = 0; y < framebuffer.height; y++) {
-		for (int x = 0; x < framebuffer.width; x++)	{
-			// set pixel (x,y) coordinates)
-			glm::vec2 pixel{ x, y };
-			// normalize (0 <-> 1) the pixel value (pixel / vec2{ framebuffer.width, framebuffer.height }
-			glm::vec2 point = pixel / glm::vec2{ framebuffer.width, framebuffer.height };
-			// flip the y value (bottom = 0, top = 1)
-			point.y = 1 - point.y;
+void Scene::Render(Framebuffer& framebuffer, const Camera& camera, int numSamples)
+{
+    for (int y = 0; y < framebuffer.height; y++)
+    {
+        for (int x = 0; x < framebuffer.width; x++)
+        {
+            color3_t pixelColor{ 0.0f };
 
-			// get ray from camera
-			ray_t ray = camera.GetRay(point);
-			// trace ray
-			raycastHit_t raycastHit;
-			
-			// 0 = min ray distance, 100 = max ray distance
-			color3_t color = Trace(ray, 0, 100, raycastHit);
+            for (int i = 0; i < numSamples; i++)
+            {
+                glm::vec2 pixel = glm::vec2(x, y);
+                pixel += glm::vec2(random::getReal<float>(), random::getReal<float>());
 
-			framebuffer.DrawPoint(x, y, ColorConvert(color));
-		}
-	}
+                glm::vec2 uv = pixel / glm::vec2(framebuffer.width, framebuffer.height);
+                uv.y = 1.0f - uv.y;
+
+                ray_t ray = camera.GetRay(uv);
+
+                pixelColor += Trace(ray, 0.001f, 10000.0f, 5);
+            }
+
+            pixelColor /= (float)numSamples;
+
+            pixelColor = glm::sqrt(pixelColor);
+
+            framebuffer.DrawPoint(x, y, ColorConvert(pixelColor));
+        }
+    }
 }
 
-void Scene::AddObject(std::unique_ptr<class Object> object) {
-	// add object to objects vector
-	objects.push_back(std::move(object));
-	
-}
+color3_t Scene::Trace(const ray_t& ray, float minDistance, float maxDistance, int maxDepth)
+{
+    if (maxDepth <= 0) {
+        return color3_t{ 0.0f };
+    }
 
-color3_t Scene::Trace(const ray_t& ray, float minDistance, float maxDistance, raycastHit_t& raycastHit) {
+    raycastHit_t hit;
+    bool rayHit = false;
+    float closestDistance = maxDistance;
 
-	bool rayHit = false;
-	float closestDistance = maxDistance;
-	//raycastHit_t raycastHit;
+    for (auto& object : objects) {
+        raycastHit_t tempHit;
+        if (object->Hit(ray, minDistance, closestDistance, tempHit)) {
+            rayHit = true;
+            closestDistance = tempHit.distance;
+            hit = tempHit;
+        }
+    }
 
-	
-	// check if scene objects are hit by the ray
-	for (auto& object : objects) {
-		// when checking objects don't include objects farther than closest hit (starts at max distance)
-		if (object->Hit(ray, minDistance, closestDistance, raycastHit))	{
-			rayHit = true;
-			// set closest distance to the raycast hit distance (only hit objects closer than closest distance)
-			closestDistance = raycastHit.distance;// raycast hit distance;
-		}
-	}
-	
-	// check if ray hit object
-	if (rayHit)	{
-		// get material color of hit object
-		color3_t color = raycastHit.color;
-		return color;
-	}
+    if (rayHit) {
+        color3_t attenuation;
+        ray_t scattered;
 
-	// draw sky colors based on the ray y position
-	glm::vec3 direction = glm::normalize(ray.direction);
-	// shift direction y from -1 <-> 1 to 0 <-> 1
-	float t = (direction.y + 1) * 0.5f;
-	
-	// interpolate between sky bottom (0) to sky top (1)
-	color3_t color = glm::mix(skyBottom, skyTop, t);
+        if (hit.material->Scatter(ray, hit, attenuation, scattered)) {
+            return attenuation * Trace(scattered, minDistance, maxDistance, maxDepth - 1);
+        }
+        else {
+            return hit.material->GetEmissive();
+        }
+    }
 
-	return color;
+    float t = 0.5f * (ray.direction.y + 1.0f);
+    return (1.0f - t) * skyBottom + t * skyTop;
 }

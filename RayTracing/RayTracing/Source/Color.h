@@ -7,14 +7,19 @@
 using color3_t = glm::vec3;
 using color4_t = glm::vec4;
 
+inline float LinearToGamma(float linear)
+{
+	return (linear > 0) ? std::sqrt(linear) : 0.0f;
+}
+
 // convert from RGBA(0.0 - 1.0) color to (0 - 255) color
 inline SDL_Color ColorConvert(const color4_t& color4)
 {
 	SDL_Color color;
 
-	color.r = static_cast<Uint8>(glm::clamp(color4.r, 0.0f, 1.0f) * 255.0f);
-	color.g = static_cast<Uint8>(glm::clamp(color4.g, 0.0f, 1.0f) * 255.0f);
-	color.b = static_cast<Uint8>(glm::clamp(color4.b, 0.0f, 1.0f) * 255.0f);
+	color.r = static_cast<Uint8>(glm::clamp(LinearToGamma(color4.r), 0.0f, 1.0f) * 255.0f);
+	color.g = static_cast<Uint8>(glm::clamp(LinearToGamma(color4.g), 0.0f, 1.0f) * 255.0f);
+	color.b = static_cast<Uint8>(glm::clamp(LinearToGamma(color4.b), 0.0f, 1.0f) * 255.0f);
 	color.a = static_cast<Uint8>(glm::clamp(color4.a, 0.0f, 1.0f) * 255.0f);
 
 	return color;
