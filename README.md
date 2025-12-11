@@ -36,5 +36,8 @@ If assets fail to load, ensure the **working directory** is set to the project r
 - Select an object in the scene window
 - Click on model or material in the inspector window
 - Select a model or material you want to change to
+---
+<img width="1482" height="977" alt="image_2025-12-01_094840067" src="https://github.com/user-attachments/assets/10ef8271-3493-4630-8a80-0dc0f4d6258b" />
+
 
 </details>
