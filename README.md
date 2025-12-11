@@ -1,4 +1,6 @@
-# GAT350
+<details>
+  
+<Summary> # GAT350 </Summary>
 
 > C++ / OpenGL student project — generalized layout and instructions.  
 > Replace placeholder names (like `OpenGLApp`) with your actual executable name if different.
@@ -33,5 +35,6 @@ If assets fail to load, ensure the **working directory** is set to the project r
 - Run the project 
 - Select an object in the scene window
 - Click on model or material in the inspector window
-- Select ne model or material you want to change to
+- Select a model or material you want to change to
 
+</details>
